@@ -23,7 +23,11 @@ class AwesomeProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie : null, //这里放自己定义的state以及初始值
+      //movie : null, //这里放自己定义的state以及初始值
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1,row2) => row1 !== row2,
+      }),
+      loaded : false,
     };
   }
 
@@ -36,23 +40,29 @@ class AwesomeProject extends Component {
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
-        movies: responseData.movies, 
+        dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+        loaded: true,
       });
-      
+
     })
     .done();
   }
 
 
   render() {
-    if(!this.state.movies){
+    if(!this.state.loaded){
       return this.renderLoadingView();
     }
 
-    var movie = this.state.movies[0];
-      return this.renderMovie(movie);
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderMovie}
+        style={styles.listView}
+      />
+    );
 }
-  
+
   renderLoadingView() {
     return (
       <View style = {styles.container}>
@@ -103,13 +113,14 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-
   thumbnail: {
     width: 53,
     height: 81,
   },
-
-  
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF',
+  }
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
