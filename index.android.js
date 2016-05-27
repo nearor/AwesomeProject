@@ -75,7 +75,6 @@ class AwesomeProject extends Component {
 
   renderMovie(movie) {
     return (
-
       <View style = {styles.container}>
         <Image
           source={{uri: movie.posters.thumbnail}}
@@ -91,7 +90,6 @@ class AwesomeProject extends Component {
   };
 
 };
-
 
 var styles = StyleSheet.create({
   container: {
