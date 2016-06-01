@@ -4,6 +4,7 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
+import java.net.DatagramSocket;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,5 +37,8 @@ public class MainActivity extends ReactActivity {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage()
         );
+
+
     }
+
 }
